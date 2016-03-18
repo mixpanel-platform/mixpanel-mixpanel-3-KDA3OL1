@@ -13,19 +13,26 @@
     <div class="mixpanel-platform-section">
       <div class="mixpanel-platform-section">
         <input style="float: left;" class="myInput" placeholder="Enter Survey ID" id="surveySelect"/>
-        <button class="button button_primary" id="csv_export">Export to CSV</button>
+        <button class="button button_primary" id="run_query">Run Query</button>
         <div style="clear: both;"></div>
       </div>
+      <button style="display:none;" class="button button_primary" id="csv_export">Export to CSV</button>
     </div>
     <script>
     var json_to_csv = new json2csv();
     var survey_id;
 
-     $('#csv_export').on('click', function(e, survey) {
+     $('#run_query').on('click', function(e, survey) {
+      $('#csv_export').hide();
        survey_id = $('#surveySelect').val();
        runQuery();
       });
       
+     $("body").on( "#csv_export", "click", function() {
+          var csv = "data:text/csv;charset=utf-8," + json_to_csv.jsonToCSV(last_response);
+          window.open(encodeURI(csv));
+      });
+        
       var runQuery = function() {
         var script = $('#cq').html();
         script = script.replace(/REPLACE_WITH_SURVEY_ID/g, survey_id);
@@ -33,8 +40,8 @@
         MP.api.custom_query(script)
         .done(function(resp) {
               last_response = resp;
-              var csv = "data:text/csv;charset=utf-8," + json_to_csv.jsonToCSV(last_response);
-              window.open(encodeURI(csv));
+              $('#csv_export').show();
+              
           }).fail(function($xhr) {
               // Somehow the request is not parsed into JSON event with application/json header
               var error = $xhr.request.responseText;
@@ -47,7 +54,6 @@
           });
       }
     </script>
-
     <script type="text/cq" id="cq">
         function main() {
           return People(
@@ -77,6 +83,5 @@
           });
         }
     </script>
-
   </body>
 </html>
