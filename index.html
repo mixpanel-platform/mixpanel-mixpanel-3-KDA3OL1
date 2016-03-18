@@ -40,8 +40,8 @@
           };
           var script = $('#cq').html();
           script = script.replace(/REPLACE_WITH_SURVEY_ID/g, queryParams);
-          script = $.trim(script, queryParams);
-          MP.api.custom_query(script)
+          script = $.trim(script);
+          MP.api.custom_query(script, queryParams)
           .done(function(resp) {
                 last_response = resp;
                 $('#csv_export').show();
