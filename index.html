@@ -32,7 +32,7 @@
         script = $.trim(script);
         MP.api.custom_query(script)
         .done(function(resp) {
-              last_response = JSON.parse(resp);
+              last_response = resp;
               var csv = "data:text/csv;charset=utf-8," + json_to_csv.jsonToCSV(last_response);
               window.open(encodeURI(csv));
           }).fail(function($xhr) {
