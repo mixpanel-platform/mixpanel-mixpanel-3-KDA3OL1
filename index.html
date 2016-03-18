@@ -63,14 +63,14 @@
           return People(
           ).filter(function(user){
             var isSurvey = false;
-            var surveyId = params.survey_id;
+            var surveyId = params.surveyID;
             _.each(user.properties.$answers, function(v,k) {
                 if(v.$survey_id == surveyId)
                   isSurvey = true
             })
             return isSurvey
           }).map(function(user) {
-            var surveyId = REPLACE_WITH_SURVEY_ID;
+            var surveyId = params.surveyID;
             var answers = {};
             _.each(user.properties.$answers, function(v,k) {
                 if(v.$survey_id == surveyId){
