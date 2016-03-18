@@ -19,14 +19,17 @@
     </div>
     <script>
     var json_to_csv = new json2csv();
+    var survey_id;
 
      $('#csv_export').on('click', function(e, survey) {
+       survey_id = $('#surveySelect').val();
+       console.log(survey_id);
        runQuery();
       });
       
       var runQuery = function() {
         var script = $('#cq').html();
-        script = script.replace(/REPLACE_WITH_SURVEY_ID/g, $('#surveySelect').val());
+        script = script.replace(/REPLACE_WITH_SURVEY_ID/g, survey_id);
         script = $.trim(script);
         MP.api.custom_query(script)
         .done(function(resp) {
