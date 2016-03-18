@@ -19,12 +19,10 @@
     </div>
     <script>
     var json_to_csv = new json2csv();
-    var last_response = undefined;
     var survey_id;
 
      $('#csv_export').on('click', function(e, survey) {
        survey_id = $('#surveySelect').val();
-       console.log(survey_id);
        runQuery();
       });
       
@@ -34,10 +32,7 @@
         script = $.trim(script);
         MP.api.custom_query(script)
         .done(function(resp) {
-              last_response = JSON.parse(resp);
-              last_response = resp;
-              var csv = "data:text/csv;charset=utf-8," + json_to_csv.jsonToCSV(last_response);
-              window.open(encodeURI(csv));
+              console.log('yes');
           }).fail(function($xhr) {
               // Somehow the request is not parsed into JSON event with application/json header
               var error = $xhr.request.responseText;
@@ -74,7 +69,9 @@
             return {
               "distinct_id": user.distinct_id,
               "Email": user.properties.$email,
-              "City": user.properties.$city              }
+              "City": user.properties.$city,
+              "Suvery": answers
+              }
           });
         }
     </script>
