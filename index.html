@@ -35,9 +35,12 @@
         });
           
         var runQuery = function() {
+          var queryParams = {
+            surveyID: survey_id
+          };
           var script = $('#cq').html();
-          script = script.replace(/REPLACE_WITH_SURVEY_ID/g, survey_id);
-          script = $.trim(script);
+          script = script.replace(/REPLACE_WITH_SURVEY_ID/g, queryParams);
+          script = $.trim(script, queryParams);
           MP.api.custom_query(script)
           .done(function(resp) {
                 last_response = resp;
@@ -60,7 +63,7 @@
           return People(
           ).filter(function(user){
             var isSurvey = false;
-            var surveyId = REPLACE_WITH_SURVEY_ID;
+            var surveyId = params.survey_id;
             _.each(user.properties.$answers, function(v,k) {
                 if(v.$survey_id == surveyId)
                   isSurvey = true
