@@ -214,7 +214,6 @@
                 
             }).fail(function($xhr) {
                 $('#run_query').html("Run Query").prop("disabled",false);
-                // Somehow the request is not parsed into JSON event with application/json header
                 var error = $xhr.request.responseText;
                 var error_text = "Requst failed";
                 try {
@@ -231,7 +230,7 @@
           ).filter(function(user){
             var isSurvey = false;
             var surveyId = params.surveyID;
-            _.each(user.properties.$answers, function(v,k) {
+            _.each(user.properties.$answers, function(v) {
                 if(v.$survey_id == surveyId)
                   isSurvey = true
             })
@@ -239,7 +238,7 @@
           }).map(function(user) {
             var surveyId = params.surveyID;
             var answers = {};
-            _.each(user.properties.$answers, function(v,k) {
+            _.each(user.properties.$answers, function(v) {
                 if(v.$survey_id == surveyId){
                   answers["Collection ID"] = v.$collection_id;
                   answers["Question ID - " + v.$question_id] = v.$value;
