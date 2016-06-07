@@ -67,7 +67,7 @@
           };
           var script = $('#cq').html();
           script = $.trim(script);
-          MP.api.custom_query(script, queryParams)
+          MP.api.jql(script, queryParams)
           .done(function(resp) {
                 $('#run_query').html("Run Query").prop("disabled",false);
                 last_response = resp;
